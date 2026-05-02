@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vestido Mônica — Totus Tuus Mariae</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream:#faf6f0; --gold:#b8962e; --primary:#020F59; --dark:#1a1410; --text:#3a3028; --muted:#7a6e65; --border:#e8ddd0; --success:#25d366;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Lato',sans-serif;background:var(--cream);color:var(--text);}
+a{color:inherit}
+nav{position:sticky;top:0;z-index:20;background:rgba(250,246,240,.97);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:1rem 5vw;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:2rem;text-decoration:none;color:var(--dark)}
+.nav-back{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--primary)}
+.page{max-width:1280px;margin:0 auto;padding:2rem 5vw 4rem}
+.breadcrumb{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 1.4rem}
+.breadcrumb a{text-decoration:none;color:var(--muted)}
+.layout{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);gap:3rem;align-items:start}
+.gallery-main{background:#eee;border:1px solid var(--border);overflow:hidden;aspect-ratio:4/5;position:relative}
+.gallery-main img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+.thumbs{display:grid;grid-template-columns:repeat(5,1fr);gap:.75rem;margin-top:.75rem}
+.thumbs button{border:1px solid var(--border);background:#fff;padding:0;cursor:pointer;overflow:hidden}
+.thumbs img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center top;display:block}
+.gallery-arrow{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border:none;border-radius:999px;background:rgba(255,255,255,.9);color:var(--primary);font-size:1.5rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(0,0,0,.12)}
+.gallery-arrow:hover{background:#fff}
+.gallery-arrow.prev{left:12px}
+.gallery-arrow.next{right:12px}
+@media (max-width:700px){.gallery-arrow{width:38px;height:38px;font-size:1.25rem}}
+.info h1{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;line-height:1.05;color:var(--dark);margin-bottom:.5rem}
+.price{font-size:1.7rem;color:var(--dark);margin-bottom:.3rem}
+.parcel{color:var(--muted);margin-bottom:1.4rem}
+.desc{font-size:1rem;line-height:1.9;color:var(--muted);margin-bottom:1.4rem}
+.actions{display:flex;gap:.9rem;flex-wrap:wrap;margin-bottom:1.8rem}
+.btn{padding:1rem 1.35rem;border:1px solid var(--primary);text-decoration:none;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;display:inline-block;text-align:center}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-secondary{background:transparent;color:var(--primary)}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--dark);margin:2rem 0 1rem}
+.details-list{display:grid;gap:.65rem;color:var(--muted);line-height:1.8}
+.size-wrap{display:grid;grid-template-columns:1fr 300px;gap:1.2rem;align-items:start}
+.size-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--border)}
+.size-table th,.size-table td{padding:.8rem .7rem;border:1px solid var(--border);text-align:center}
+.size-table th{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--dark);background:#f5f1fb}
+.size-image{width:100%;border:1px solid var(--border);background:#fff}
+footer{padding:2rem 5vw 3rem;color:var(--muted);font-size:.84rem;text-align:center}
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr}
+  .info h1{font-size:2.35rem}
+  .thumbs{grid-template-columns:repeat(4,1fr)}
+  .size-wrap{grid-template-columns:1fr}
+}
+
+/* AJUSTES: tabela única + variações + carrinho */
+.size-table{display:none!important}
+.size-wrap{display:block!important}
+.size-image{display:block!important;max-width:420px;width:100%;height:auto;margin-top:.8rem}
+.product-options{border:1px solid var(--border);background:rgba(255,255,255,.45);padding:1rem;margin:0 0 1.2rem;display:grid;gap:1rem}
+.option-label{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.55rem;font-weight:700}
+.color-options,.size-options{display:flex;gap:.55rem;flex-wrap:wrap}
+.option-btn{border:1px solid var(--border);background:#fff;color:var(--text);padding:.65rem .9rem;cursor:pointer;font-size:.78rem;transition:all .2s}
+.option-btn.active,.option-btn:hover{border-color:var(--primary);color:var(--primary);box-shadow:0 0 0 1px var(--primary) inset}
+.color-dot{display:inline-block;width:.85rem;height:.85rem;border-radius:50%;border:1px solid rgba(0,0,0,.15);vertical-align:-.1rem;margin-right:.35rem;background:var(--swatch,#ddd)}
+.selection-summary{font-size:.86rem;color:var(--muted);line-height:1.6;margin-top:.1rem}
+.btn-cart{background:#fff;color:var(--primary);cursor:pointer}
+.cart-mini{position:fixed;right:1.2rem;bottom:1.2rem;width:min(390px,calc(100vw - 2.4rem));background:var(--cream);border:1px solid var(--border);box-shadow:0 16px 42px rgba(0,0,0,.18);padding:1rem;z-index:99;display:none}
+.cart-mini.open{display:block}
+.cart-mini h3{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.65rem;color:var(--dark);margin-bottom:.6rem}
+.cart-mini-item{font-size:.9rem;line-height:1.65;color:var(--muted);border-top:1px solid var(--border);padding:.75rem 0}
+.cart-mini-actions{display:grid;gap:.5rem;margin-top:.75rem}
+.cart-mini-close{position:absolute;right:.7rem;top:.55rem;border:0;background:transparent;font-size:1.25rem;color:var(--muted);cursor:pointer}
+@media(max-width:700px){.product-options{padding:.85rem}.option-btn{flex:1 1 auto}.cart-mini{right:.8rem;bottom:.8rem;width:calc(100vw - 1.6rem)}}
+
+</style>
+
+<script>
+let galleryImages = ["../imagens/vestidos-site/monica-1.webp", "../imagens/vestidos-site/monica-2.webp", "../imagens/vestidos-site/monica-3.webp", "../imagens/vestidos-site/monica-4.webp", "../imagens/vestidos-site/monica-5.webp", "../imagens/vestidos-site/monica-6.webp"];
+let galleryIndex = 0;
+function setMain(src) {
+  const img = document.getElementById('mainImage');
+  img.src = src;
+  galleryIndex = galleryImages.indexOf(src);
+  if (galleryIndex < 0) galleryIndex = 0;
+}
+function showPrev(){ galleryIndex = (galleryIndex - 1 + galleryImages.length) % galleryImages.length; setMain(galleryImages[galleryIndex]); }
+function showNext(){ galleryIndex = (galleryIndex + 1) % galleryImages.length; setMain(galleryImages[galleryIndex]); }
+document.addEventListener('keydown', function(e){ if(e.key==='ArrowLeft') showPrev(); if(e.key==='ArrowRight') showNext(); });
+</script>
+
+
+<script>
+const productName = "Vestido Mônica";
+const productPrice = "R$ 289,90";
+const productVariations = {"Estampado": {"swatch": "linear-gradient(135deg,#4a7c39,#f2d3ba,#7c4a3c)", "images": ["../imagens/vestidos-site/monica-1.webp", "../imagens/vestidos-site/monica-2.webp", "../imagens/vestidos-site/monica-3.webp", "../imagens/vestidos-site/monica-4.webp", "../imagens/vestidos-site/monica-5.webp", "../imagens/vestidos-site/monica-6.webp"]}};
+const productSizes = ['PP','P','M','G','GG'];
+let selectedColor = Object.keys(productVariations)[0];
+let selectedSize = 'M';
+let miniCart = [];
+
+function moneyToNumber(text){
+  return Number(String(text).replace('R$','').replace(/\./g,'').replace(',','.').trim()) || 0;
+}
+function rebuildThumbs(){
+  const thumbs = document.querySelector('.thumbs');
+  if(!thumbs) return;
+  thumbs.innerHTML = galleryImages.map(src => `<button type="button" onclick="setMain('${src}')"><img src="${src}" alt="${productName} ${selectedColor}"></button>`).join('');
+}
+function renderOptions(){
+  const colorBox = document.getElementById('colorOptions');
+  const sizeBox = document.getElementById('sizeOptions');
+  if(colorBox){
+    colorBox.innerHTML = Object.keys(productVariations).map(color => {
+      const active = color === selectedColor ? ' active' : '';
+      const swatch = productVariations[color].swatch || '#ddd';
+      return `<button type="button" class="option-btn${active}" onclick="selectColor('${color.replace(/'/g,"\\'")}')"><span class="color-dot" style="--swatch:${swatch}"></span>${color}</button>`;
+    }).join('');
+  }
+  if(sizeBox){
+    sizeBox.innerHTML = productSizes.map(size => `<button type="button" class="option-btn${size === selectedSize ? ' active' : ''}" onclick="selectSize('${size}')">${size}</button>`).join('');
+  }
+  updateSummary();
+}
+function selectColor(color){
+  selectedColor = color;
+  galleryImages = productVariations[color].images.slice();
+  galleryIndex = 0;
+  rebuildThumbs();
+  setMain(galleryImages[0]);
+  renderOptions();
+}
+function selectSize(size){ selectedSize = size; renderOptions(); }
+function updateSummary(){
+  const el = document.getElementById('selectionSummary');
+  if(el) el.textContent = `Selecionado: ${selectedColor} · Tamanho ${selectedSize}`;
+  const buy = document.getElementById('buyWhatsapp');
+  if(buy){
+    const msg = `Olá! Tenho interesse no ${productName}. Cor: ${selectedColor}. Tamanho: ${selectedSize}. Preço: ${productPrice}.`;
+    buy.href = `https://wa.me/5583986464175?text=${encodeURIComponent(msg)}`;
+  }
+}
+function addCurrentToCart(){
+  miniCart.push({name: productName, color:selectedColor, size:selectedSize, price:productPrice, image:galleryImages[0]});
+  renderMiniCart();
+  document.getElementById('miniCart')?.classList.add('open');
+}
+function renderMiniCart(){
+  const body = document.getElementById('miniCartBody');
+  const totalEl = document.getElementById('miniCartTotal');
+  if(!body) return;
+  if(!miniCart.length){ body.innerHTML = '<p class="cart-mini-item">Seu carrinho está vazio.</p>'; if(totalEl) totalEl.textContent='R$ 0,00'; return; }
+  body.innerHTML = miniCart.map((item, i) => `<div class="cart-mini-item"><strong>${item.name}</strong><br>Cor: ${item.color}<br>Tamanho: ${item.size}<br>Preço: ${item.price}<br><button type="button" class="cart-mini-close-line" onclick="removeMiniCart(${i})">Remover</button></div>`).join('');
+  const total = miniCart.reduce((sum,item)=>sum+moneyToNumber(item.price),0);
+  if(totalEl) totalEl.textContent = total.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+}
+function removeMiniCart(index){ miniCart.splice(index,1); renderMiniCart(); }
+function closeMiniCart(){ document.getElementById('miniCart')?.classList.remove('open'); }
+function sendMiniCart(){
+  if(!miniCart.length) return;
+  const lines = miniCart.map(item => `- ${item.name} | Cor: ${item.color} | Tamanho: ${item.size} | ${item.price}`).join('\n');
+  const total = miniCart.reduce((sum,item)=>sum+moneyToNumber(item.price),0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+  const msg = `Olá! Montei um carrinho no site da Totus Tuus:\n\n${lines}\n\nTotal estimado: ${total}`;
+  window.open(`https://wa.me/5583986464175?text=${encodeURIComponent(msg)}`,'_blank');
+}
+document.addEventListener('DOMContentLoaded',()=>{ selectedColor = Object.keys(productVariations)[0]; galleryImages = productVariations[selectedColor].images.slice(); rebuildThumbs(); setMain(galleryImages[0]); renderOptions(); renderMiniCart(); });
+</script>
+
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="../index.html#vestidos">Totus Tuus Mariae</a>
+  <a class="nav-back" href="../index.html#vestidos">← voltar aos vestidos</a>
+</nav>
+<div class="page">
+  <div class="breadcrumb"><a href="../index.html#home">Início</a> › <a href="../index.html#vestidos">Vestidos</a> › <span>Vestido Mônica</span></div>
+  <div class="layout">
+    <div class="gallery">
+      <div class="gallery-main"><button type="button" class="gallery-arrow prev" aria-label="Foto anterior" onclick="showPrev()">&#8249;</button><button type="button" class="gallery-arrow next" aria-label="Próxima foto" onclick="showNext()">&#8250;</button><img id="mainImage" src="../imagens/vestidos-site/monica-1.webp" alt="Vestido Mônica"></div>
+      <div class="thumbs">
+        <button type="button" onclick="setMain('../imagens/vestidos-site/monica-1.webp')"><img src="../imagens/vestidos-site/monica-1.webp" alt="Vestido Mônica"></button>
+<button type="button" onclick="setMain('../imagens/vestidos-site/monica-2.webp')"><img src="../imagens/vestidos-site/monica-2.webp" alt="Vestido Mônica"></button>
+<button type="button" onclick="setMain('../imagens/vestidos-site/monica-3.webp')"><img src="../imagens/vestidos-site/monica-3.webp" alt="Vestido Mônica"></button>
+<button type="button" onclick="setMain('../imagens/vestidos-site/monica-4.webp')"><img src="../imagens/vestidos-site/monica-4.webp" alt="Vestido Mônica"></button>
+<button type="button" onclick="setMain('../imagens/vestidos-site/monica-5.webp')"><img src="../imagens/vestidos-site/monica-5.webp" alt="Vestido Mônica"></button>
+<button type="button" onclick="setMain('../imagens/vestidos-site/monica-6.webp')"><img src="../imagens/vestidos-site/monica-6.webp" alt="Vestido Mônica"></button>
+      </div>
+    </div>
+    <div class="info">
+      <h1>Vestido Mônica</h1>
+      <div class="price">R$ 289,90</div>
+      <div class="parcel">ou 12× de R$ 24,16</div>
+      <div class="product-options">
+        <div>
+          <span class="option-label">Escolha a cor</span>
+          <div class="color-options" id="colorOptions"></div>
+        </div>
+        <div>
+          <span class="option-label">Escolha o tamanho</span>
+          <div class="size-options" id="sizeOptions"></div>
+        </div>
+        <div class="selection-summary" id="selectionSummary"></div>
+      </div>
+      <div class="actions">
+        <a id="buyWhatsapp" class="btn btn-primary" target="_blank" href="#">Comprar pelo WhatsApp</a>
+        <button type="button" class="btn btn-cart" onclick="addCurrentToCart()">Adicionar ao carrinho</button>
+        <a class="btn btn-secondary" href="../index.html#vestidos">Ver mais vestidos</a>
+      </div>
+      <p class="desc">Vestido em crepe estampado com saia evasê e mangas ¾ com amarração no punho. Possui elástico na cintura e duas variantes estampadas. Composição: 95% poliéster e 5% elastano. Tamanhos: P, M e G.</p>
+      <div class="section-title">Informações da peça</div>
+      <div class="details-list">
+        <div>• As fotos secundárias ajudam a visualizar melhor caimento, textura e variações de cor.</div>
+        <div>• Esta página reúne preço, descrição, galeria e tabela de medidas para facilitar sua escolha.</div>
+      </div>
+      
+<div class="size-block">
+  <h3>Tabela de medidas geral</h3>
+  <div class="size-wrap">
+    <img src="../imagens/tabela-medidas-geral.png" alt="Tabela de medidas geral Totus Tuus" class="size-image">
+  </div>
+</div>
+
+    </div>
+  </div>
+</div>
+
+<div class="cart-mini" id="miniCart">
+  <button type="button" class="cart-mini-close" onclick="closeMiniCart()">×</button>
+  <h3>Seu carrinho</h3>
+  <div id="miniCartBody"></div>
+  <div class="cart-mini-item"><strong>Total estimado:</strong> <span id="miniCartTotal">R$ 0,00</span></div>
+  <div class="cart-mini-actions">
+    <button type="button" class="btn btn-primary" onclick="sendMiniCart()">Enviar carrinho no WhatsApp</button>
+    <button type="button" class="btn btn-secondary" onclick="closeMiniCart()">Continuar vendo</button>
+  </div>
+</div>
+<footer>© Totus Tuus Mariae — Moda católica feminina com elegância, recato e identidade de fé.</footer>
+</body>
+</html>
